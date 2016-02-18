@@ -1,7 +1,7 @@
 import React from 'react'
 
 import GeoLocate from '../../util/geolocate.jsx'
-import makeRequest   from '../../util/makeRequest.jsx'
+import makeRequest from '../../util/makeRequest.jsx'
 
 
 function getMyLocation(){
@@ -9,8 +9,11 @@ function getMyLocation(){
 
     function success(position){
 
+        // Convert latitude, longitude to address
         GeoLocate.coordsToAddress(position.coords.latitude, position.coords.longitude)
         .then(function(response){
+
+            // If successfull update address in parent component
             self.props.setAddress(response.results[0].formatted_address)
         })
         .catch(function(err){
