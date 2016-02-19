@@ -9,6 +9,41 @@ import GeoLocate from './util/geolocate.jsx'
 import If from './util/if.jsx'
 import GpsButton from './components/button/gpsbutton.jsx'
 
+const Wrapper = React.createClass({
+    getInitialState(){
+        return {
+            year: new Date().getFullYear()
+        }
+    },
+    render(){
+        return (
+            <section>
+                <nav className="navbar navbar-default navbar-fixed-top">
+                    <div className="container">
+
+                    </div>
+                </nav>
+                <main className="container">
+                    <section className="row">
+                        <div className="col-md-6 col-md-offset-3">
+                            {this.props.children}
+                        </div>
+                    </section>
+                </main>
+                <footer className="footer">
+                    <div className="container">
+                        <p className="text-mute text-center">
+                            nexttrain - {this.state.year}
+                        </p>
+                    </div>
+                </footer>
+                <footer>
+
+                </footer>
+            </section>
+        )
+    }
+})
 
 const HomePage = React.createClass({
     getDefaultProps(){
@@ -72,6 +107,7 @@ const HomePage = React.createClass({
                     onSuggestSelect={this.onSuggestSelectEnd}
                     location={new google.maps.LatLng(53.558572, 9.9278215)}
                     radius="20" />
+                <a src="" className="btn btn-lg center-block btn-primary"><i className="fa fa-search"></i> Find Next Train</a>
                 </form>
 
             </section>
@@ -83,7 +119,9 @@ const App = React.createClass({
     render(){
         return (
             <div>
-                <HomePage />
+                <Wrapper>
+                    <HomePage />
+                </Wrapper>
             </div>
         )
     }
