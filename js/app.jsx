@@ -9,6 +9,10 @@ import GeoLocate from './util/geolocate.jsx'
 import If from './util/if.jsx'
 import GpsButton from './components/button/gpsbutton.jsx'
 import makeRequest from './util/makeRequest.jsx'
+
+import Input from './components/input/input.jsx'
+import Datalist from './components/input/datalist.jsx'
+
 import config from './config.js'
 
 const Wrapper = React.createClass({
@@ -89,10 +93,19 @@ const HomePage = React.createClass({
             ]
         }
     },
-
     getInitialState(){
         return {
-            initialValue : 'San Francisco'
+            initialValue : 'San Francisco',
+            startLocation: {
+              name: 'startLocation',
+              type: 'text',
+              value: '12th St. Oakland City Center',
+              placeholder : '12th St. Oakland City Center',
+              required: true,
+              options: [
+                  {value: '12TH', label: '12th St. Oakland City Center'}
+              ]
+            }
         }
     },
     onSuggestSelectStart(suggest) {
@@ -145,6 +158,9 @@ const HomePage = React.createClass({
                     onSuggestSelect={this.onSuggestSelectStart}
                     location={new google.maps.LatLng(53.558572, 9.9278215)}
                     radius="20" />
+                <select id="edit-from-station" name="from_station" class="form-select"><option value="">Departing from?</option><option value="closest">Find closest</option><option value="12TH">12th St. Oakland City Center</option><option value="16TH">16th St. Mission (SF)</option><option value="19TH">19th St. Oakland</option><option value="24TH">24th St. Mission (SF)</option><option value="ASHB">Ashby (Berkeley)</option><option value="BALB">Balboa Park (SF)</option><option value="BAYF">Bay Fair (San Leandro)</option><option value="CAST">Castro Valley</option><option value="CIVC">Civic Center/UN Plaza (SF)</option><option value="COLS">Coliseum</option><option value="COLM" selected="selected">Colma</option><option value="CONC">Concord</option><option value="DALY">Daly City</option><option value="DBRK">Downtown Berkeley</option><option value="DUBL">Dublin/Pleasanton</option><option value="DELN">El Cerrito del Norte</option><option value="PLZA">El Cerrito Plaza</option><option value="EMBR">Embarcadero (SF)</option><option value="FRMT">Fremont</option><option value="FTVL">Fruitvale (Oakland)</option><option value="GLEN">Glen Park (SF)</option><option value="HAYW">Hayward</option><option value="LAFY">Lafayette</option><option value="LAKE">Lake Merritt (Oakland)</option><option value="MCAR">MacArthur (Oakland)</option><option value="MLBR">Millbrae</option><option value="MONT">Montgomery St. (SF)</option><option value="NBRK">North Berkeley</option><option value="NCON">North Concord/Martinez</option><option value="OAKL">Oakland Int'l Airport</option><option value="ORIN">Orinda</option><option value="PITT">Pittsburg/Bay Point</option><option value="PHIL">Pleasant Hill/Contra Costa Centre</option><option value="POWL">Powell St. (SF)</option><option value="RICH">Richmond</option><option value="ROCK">Rockridge (Oakland)</option><option value="SBRN">San Bruno</option><option value="SFIA">San Francisco Int'l Airport</option><option value="SANL">San Leandro</option><option value="SHAY">South Hayward</option><option value="SSAN">South San Francisco</option><option value="UCTY">Union City</option><option value="WCRK">Walnut Creek</option><option value="WDUB">West Dublin/Pleasanton</option><option value="WOAK">West Oakland</option></select>
+                    <Input {...this.state.startLocation} id="startLocation" list="startLocation-list" onChange={this.handleChange}/>
+                    <Datalist id="startLocation-list"  options={this.state.startLocation.options} onChange={this.handleChange} />
                     <If show={GeoLocate.canGeoLocate()}>
                         <GpsButton setAddress={this.startLocation} />
                     </If>
