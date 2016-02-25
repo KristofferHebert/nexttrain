@@ -166,13 +166,19 @@ const HomePage = React.createClass({
         return (
             <section>
                 <form action="">
-                    <label htmlFor="startLocation" className="control-label">Starting Location</label>
-                    <Input {...this.state.startLocation} id="startLocation" className="form-control" list="startLocation-list" placeholder="Select a Starting place"onChange={this.handleChange}/>
-                    <Datalist id="startLocation-list"  options={this.state.startLocation.options} onChange={this.handleChange} />
-                    <If show={GeoLocate.canGeoLocate()}>
-                        <GpsButton setAddress={this.startLocation} />
-                    </If>
-
+                    <label htmlFor="startLocation" className="control-label">Departing from</label>
+                    <div className="input-group">
+                        <Input {...this.state.startLocation} id="startLocation" className="form-control" list="startLocation-list" placeholder="Select a Starting place"onChange={this.handleChange}/>
+                        <Datalist id="startLocation-list"  options={this.state.startLocation.options} onChange={this.handleChange} />
+                        <If show={GeoLocate.canGeoLocate()}>
+                            <span className="input-group-btn">
+                                <GpsButton setAddress={this.startLocation} />
+                            </span>
+                        </If>
+                    </div>
+                    <label htmlFor="endLocation" className="control-label">Arriving at</label>
+                    <Input {...this.state.startLocation} id="startLocation" className="form-control" list="endLocation-list" placeholder="Select a Starting place"onChange={this.handleChange}/>
+                    <Datalist id="endLocation-list"  options={this.state.startLocation.options} onChange={this.handleChange} />
                 <a src="" className="btn btn-lg center-block btn-primary"><i className="fa fa-search"></i> Find Next Train</a>
                 </form>
 

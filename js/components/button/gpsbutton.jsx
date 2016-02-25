@@ -43,7 +43,7 @@ const GpsButton = React.createClass({
         let icons = (this.state.message === '') ? 'fa fa-location-arrow' : 'fa fa-spinner fa-spin'
 
         return (
-            <a className="btn btn-primary btn-no-left-corners" onClick={this.getMyLocation}>
+            <a className="btn btn-primary" onClick={this.getMyLocation}>
                 <i className={icons}></i></a>
         )
     }
