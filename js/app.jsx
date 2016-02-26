@@ -17,42 +17,7 @@ import config from './config.js'
 
 // <select id="edit-from-station" name="from_station" class="form-select"><option value="">Departing from?</option><option value="closest">Find closest</option><option value="12TH">12th St. Oakland City Center</option><option value="16TH">16th St. Mission (SF)</option><option value="19TH">19th St. Oakland</option><option value="24TH">24th St. Mission (SF)</option><option value="ASHB">Ashby (Berkeley)</option><option value="BALB">Balboa Park (SF)</option><option value="BAYF">Bay Fair (San Leandro)</option><option value="CAST">Castro Valley</option><option value="CIVC">Civic Center/UN Plaza (SF)</option><option value="COLS">Coliseum</option><option value="COLM" selected="selected">Colma</option><option value="CONC">Concord</option><option value="DALY">Daly City</option><option value="DBRK">Downtown Berkeley</option><option value="DUBL">Dublin/Pleasanton</option><option value="DELN">El Cerrito del Norte</option><option value="PLZA">El Cerrito Plaza</option><option value="EMBR">Embarcadero (SF)</option><option value="FRMT">Fremont</option><option value="FTVL">Fruitvale (Oakland)</option><option value="GLEN">Glen Park (SF)</option><option value="HAYW">Hayward</option><option value="LAFY">Lafayette</option><option value="LAKE">Lake Merritt (Oakland)</option><option value="MCAR">MacArthur (Oakland)</option><option value="MLBR">Millbrae</option><option value="MONT">Montgomery St. (SF)</option><option value="NBRK">North Berkeley</option><option value="NCON">North Concord/Martinez</option><option value="OAKL">Oakland Int'l Airport</option><option value="ORIN">Orinda</option><option value="PITT">Pittsburg/Bay Point</option><option value="PHIL">Pleasant Hill/Contra Costa Centre</option><option value="POWL">Powell St. (SF)</option><option value="RICH">Richmond</option><option value="ROCK">Rockridge (Oakland)</option><option value="SBRN">San Bruno</option><option value="SFIA">San Francisco Int'l Airport</option><option value="SANL">San Leandro</option><option value="SHAY">South Hayward</option><option value="SSAN">South San Francisco</option><option value="UCTY">Union City</option><option value="WCRK">Walnut Creek</option><option value="WDUB">West Dublin/Pleasanton</option><option value="WOAK">West Oakland</option></select>
 
-
-const Wrapper = React.createClass({
-    getInitialState(){
-        return {
-            year: new Date().getFullYear()
-        }
-    },
-    render(){
-        return (
-            <section>
-                <nav className="navbar navbar-default">
-                    <div className="container">
-                        <a href="#" className="navbar-brand">NEXT TRAIN: BART</a>
-                    </div>
-                </nav>
-                <main className="container">
-                    <section className="row">
-                        <div className="col-md-6 col-md-offset-3">
-                            {this.props.children}
-                        </div>
-                    </section>
-                </main>
-                <footer className="footer">
-                    <div className="container">
-                        <p className="text-mute text-center">
-                            nexttrain - {this.state.year}
-                        </p>
-                    </div>
-                </footer>
-                <footer>
-
-                </footer>
-            </section>
-        )
-    }
-})
+import Wrapper from './components/wrapper.jsx'
 
 const StationList = React.createClass({
     getDefaultProps(){
