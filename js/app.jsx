@@ -12,6 +12,8 @@ import makeRequest from './util/makeRequest.jsx'
 
 import Input from './components/input/input.jsx'
 import Datalist from './components/input/datalist.jsx'
+import handleChange from './components/input/handeChange.jsx'
+
 
 import config from './config.js'
 
@@ -50,18 +52,7 @@ const StationList = React.createClass({
 })
 
 
-function handleChange(event){
-  var updatedState = this.state
-  var name = event.target.name
-  updatedState[name].value = event.target.value
 
-  if(updatedState[name].validate && updatedState[name].value !== ''){
-      updatedState = this.validate(updatedState[name], updatedState[name].validate, updatedState[name].type)
-  }
-
-  this.setState(updatedState)
-
-}
 
 const HomePage = React.createClass({
     getDefaultProps(){
