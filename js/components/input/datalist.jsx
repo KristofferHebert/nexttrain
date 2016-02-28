@@ -15,13 +15,13 @@ const Datalist = React.createClass({
 
             const options = this.props.options.map((option, i)=>{
                 return (
-                    <option key={i} data-ref={option.value}>{option.label}</option>
+                    <option key={i} ref={option.value}>{option.label}</option>
                 )
             })
             return (
-                        <datalist id={this.props.id} value={this.props.value}>
-                            {options}
-                        </datalist>
+                <datalist id={this.props.id} value={this.props.value}>
+                    {options}
+                </datalist>
         )
     }
 })

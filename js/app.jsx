@@ -13,34 +13,50 @@ import makeRequest from './util/makeRequest.jsx'
 import Input from './components/input/input.jsx'
 import Datalist from './components/input/datalist.jsx'
 import handleChange from './components/input/handleChange.jsx'
+import setStation from './components/input/setStation.jsx'
 
 import config from './config.js'
 
 import Wrapper from './components/wrapper.jsx'
 
+// https://www.bart.gov/schedules/quickplanner?orig=CONC&addr1=&dest=FRMT&addr2=&type=departure&date=2016-02-28&time=now&tab=2
+// http://api.bart.gov/api/sched.aspx?cmd=depart&orig=CONC&dest=FRMT&type=departure&date=now&time=now&key=MW9S-E7SL-26DU-VV8V
+
+
+
 const StationList = React.createClass({
     getDefaultProps(){
         return {
-            stations : [{"_id":"56c7dac7dbb58dd8c5888142","stop_id":"1369","stop_name":"Camino Pablo/Miner Rd","stop_lat":37.888623,"stop_lon":-122.194463,"location_type":0,"parent_station":"","agency_key":"county-connection","loc":[-122.194463,37.888623]},{"_id":"56c7dac7dbb58dd8c5888148","stop_id":"1375","stop_name":"Miner Rd/Camino Lenada","stop_lat":37.890542,"stop_lon":-122.19401,"location_type":0,"parent_station":"","agency_key":"county-connection","loc":[-122.19401,37.890542]},{"_id":"56c7dac7dbb58dd8c5888143","stop_id":"1370","stop_name":"Camino Pablo/El Toyonal","stop_lat":37.885734,"stop_lon":-122.193478,"location_type":0,"parent_station":"","agency_key":"county-connection","loc":[-122.193478,37.885734]},{"_id":"56c7dac7dbb58dd8c5888169","stop_id":"1409","stop_name":"Orinda Way/Avenida De Orinda","stop_lat":37.885256,"stop_lon":-122.191606,"location_type":0,"parent_station":"","agency_key":"county-connection","loc":[-122.191606,37.885256]},{"_id":"56c7dac7dbb58dd8c5888168","stop_id":"1408","stop_name":"Orinda Way/Irwin Way","stop_lat":37.884259,"stop_lon":-122.190041,"location_type":0,"parent_station":"","agency_key":"county-connection","loc":[-122.190041,37.884259]},{"_id":"56c7dac7dbb58dd8c5888167","stop_id":"1407","stop_name":"26 Orinda Way","stop_lat":37.882826,"stop_lon":-122.188304,"location_type":0,"parent_station":"","agency_key":"county-connection","loc":[-122.188304,37.882826]},{"_id":"56c7dac7dbb58dd8c5888149","stop_id":"1376","stop_name":"Miner Rd/Camino Don Miguel","stop_lat":37.897238,"stop_lon":-122.192035,"location_type":0,"parent_station":"","agency_key":"county-connection","loc":[-122.192035,37.897238]},{"_id":"56c7dac7dbb58dd8c5888166","stop_id":"1406","stop_name":"24 Orinda Way","stop_lat":37.881589,"stop_lon":-122.186819,"location_type":0,"parent_station":"","agency_key":"county-connection","loc":[-122.186819,37.881589]},{"_id":"56c7dac7dbb58dd8c588816d","stop_id":"1413","stop_name":"Santa Maria Way/Orinda Way","stop_lat":37.881064,"stop_lon":-122.18606,"location_type":0,"parent_station":"","agency_key":"county-connection","loc":[-122.18606,37.881064]},{"_id":"56c7dac7dbb58dd8c5888141","stop_id":"1368","stop_name":"521 Altarinda Rd","stop_lat":37.883129,"stop_lon":-122.183839,"location_type":0,"parent_station":"","agency_key":"county-connection","loc":[-122.183839,37.883129]},{"_id":"56c7dac7dbb58dd8c588816c","stop_id":"1412","stop_name":"Orindawoods Dr/Village Gate Rd","stop_lat":37.885237,"stop_lon":-122.182698,"location_type":0,"parent_station":"","agency_key":"county-connection","loc":[-122.182698,37.885237]},{"_id":"56c7dac7dbb58dd8c588814a","stop_id":"1377","stop_name":"Miner Rd/Camino Sobrante","stop_lat":37.900809,"stop_lon":-122.190875,"location_type":0,"parent_station":"","agency_key":"county-connection","loc":[-122.190875,37.900809]},{"_id":"56c7dac7dbb58dd8c588813f","stop_id":"1366","stop_name":"Bart Orinda","stop_lat":37.878025,"stop_lon":-122.184133,"location_type":0,"parent_station":"","agency_key":"county-connection","loc":[-122.184133,37.878025]},{"_id":"56c7dac7dbb58dd8c588814b","stop_id":"1378","stop_name":"Miner Rd/Lombardy Ln","stop_lat":37.90239,"stop_lon":-122.189939,"location_type":0,"parent_station":"","agency_key":"county-connection","loc":[-122.189939,37.90239]}]
+            stations:{"uri":"","origin":"","destination":"","sched_num":"",
+                "schedule":{"date":"","time":"","before":"","after":"","request":{"trip":[{"origin":"","destination":"","fare":"","origTimeMin":"","origTimeDate":" ","destTimeMin":"","destTimeDate":"","clipper":"","leg":{"order":"","transfercode":"","origin":"","destination":"","origTimeMin":"","origTimeDate":"","destTimeMin":"","destTimeDate":"","line":"","bikeflag":"","trainHeadStation":"","trainIdx":""}}]}},"message":{"co2_emissions":""}
+            }
         }
     },
     render(){
 
-        const stations = this.props.stations.map(function(station, i){
+        const stations = this.props.stations
+        const schedule = stations.schedule
+
+        const triplist = schedule.request.trip.map(function(trip, i){
             return (
                 <li key={i} className='geosuggest-item'>
-                    {station.stop_name} <i className="fa fa-train pull-right"></i>
+                    {trip.leg.origTimeMin} to {trip.leg.destTimeMin} <span className="pull-right">Fare: ${trip.fare}  <i className="fa fa-train"></i></span>
                 </li>
             )
         })
 
         return (
             <section>
+                <header>
+                    Depart: {stations.origin}<br />
+                    Arrive: {stations.destination}<br />
+                    Date: {schedule.date}
+                </header>
                 <label htmlFor={this.props.id}>
                     {this.props.label}
                 </label>
-                <ul className="geosuggest__suggests" id={this.props.id}>
-                    {stations}
+                <ul className="geosuggest__suggests">
+                    {triplist}
                 </ul>
             </section>
             )
@@ -116,13 +132,20 @@ const HomePage = React.createClass({
               name: 'startLocation',
               type: 'text',
               value: '',
+              station: '',
+              dirty: false,
               required: true
             },
             endLocation: {
               name: 'endLocation',
               type: 'text',
               value: '',
+              station: '',
+              dirty: false,
               required: true
+            },
+            stations:{"uri":"","origin":"","destination":"","sched_num":"",
+                            "schedule":{"date":"","time":"","before":"","after":"","request":{"trip":[{"origin":"","destination":"","fare":"","origTimeMin":"","origTimeDate":" ","destTimeMin":"","destTimeDate":"","clipper":"","leg":{"order":"","transfercode":"","origin":"","destination":"","origTimeMin":"","origTimeDate":"","destTimeMin":"","destTimeDate":"","line":"","bikeflag":"","trainHeadStation":"","trainIdx":""}}]}},"message":{"co2_emissions":""}
             }
         }
     },
@@ -150,18 +173,29 @@ const HomePage = React.createClass({
         this.setState({
             initialValue : address
         })
-        console.log(this.state)
     },
-    getStations(lat, long){
-        makeRequest(config.base + '/api/near/' + lat + '/' + long)
-        .then(function(stations){
-            console.log(stations)
-        })
-        .catch(function(){
+    getStations(){
 
-        })
+        if(this.state.startLocation.dirty === true && this.state.endLocation.dirty === true){
+            const self = this
+            const startStaton = this.state.startLocation.station
+            const endStation = this.state.endLocation.station
+
+            makeRequest(config.base + '/api/sched.aspx?cmd=depart&orig='+ startStaton +'&dest='+ endStation +'&type=departure&date=now&time=now&key=' + config.key)
+            .then(function(stations){
+                self.setState({ stations: stations.data })
+            })
+            .catch(function(err){
+                console.log(err)
+            })
+        }
+
+
+
+
     },
     handleChange,
+    setStation,
     render(){
 
         // TODO: Add fallback for no gpsbutton
@@ -171,21 +205,21 @@ const HomePage = React.createClass({
                 <form action="">
                     <label htmlFor="startLocation" className="control-label ">Departing from</label>
                     <div className="input-group form-group">
-                        <Input {...this.state.startLocation} id="startLocation" className="form-control" list="startLocation-list" placeholder="Select Depature Station" onChange={this.handleChange}/>
-                        <Datalist id="startLocation-list"  options={this.state.options} onChange={this.handleChange} />
+                        <Input {...this.state.startLocation} id="startLocation" className="form-control" list="startLocation-list" placeholder="Select Depature Station" onChange={this.setStation} />
+                        <Datalist id="startLocation-list"  options={this.state.options} />
                             <span className="input-group-btn">
                                 <GpsButton setAddress={this.startLocation} />
                             </span>
                     </div>
                     <div className="form-group">
                         <label htmlFor="endLocation" className="control-label">Arriving at</label>
-                        <Input {...this.state.endLocation} id="endLocation" className="form-control" list="endLocation-list" placeholder="Select Arrival Station"onChange={this.handleChange}/>
+                        <Input {...this.state.endLocation} id="endLocation" className="form-control" list="endLocation-list" placeholder="Select Arrival Station" onChange={this.setStation}/>
                         <Datalist id="endLocation-list"  options={this.state.options} onChange={this.handleChange} />
                     </div>
-                    <a src="" className="btn btn-lg center-block btn-primary"><i className="fa fa-search"></i> Find Next Train</a>
-
+                    <If show={this.state.startLocation.dirty === true && this.state.endLocation.dirty === true}>
+                        <StationList stations={this.state.stations}/>
+                    </If>
                 </form>
-
             </section>
         )
     }

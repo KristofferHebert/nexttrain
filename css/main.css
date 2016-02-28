@@ -18,6 +18,9 @@
 
 .geosuggest-item:first-child {
     border-top: 1px solid #0099cc;
+    background: #0099cc;
+    font-weight: bold;
+    color: #fff;
 }
 
 .geosuggest-item:last-child {
@@ -27,6 +30,7 @@
 .geosuggest-item.geosuggest-item--active, .geosuggest-item:hover {
     background: #337ab7;
     color: #fff;
+    cursor: pointer
 }
 
 /* starting location */
