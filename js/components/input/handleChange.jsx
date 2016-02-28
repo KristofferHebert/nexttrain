@@ -1,6 +1,8 @@
 function handleChange(event){
   var updatedState = this.state
   var name = event.target.name
+  var cb = this.props.callback
+
   updatedState[name].value = event.target.value
 
   if(updatedState[name].validate && updatedState[name].value !== ''){
@@ -8,6 +10,10 @@ function handleChange(event){
   }
 
   this.setState(updatedState)
+
+  if(cb){
+      cb(event)
+  }
 
 }
 

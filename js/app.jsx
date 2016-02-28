@@ -12,7 +12,7 @@ import makeRequest from './util/makeRequest.jsx'
 
 import Input from './components/input/input.jsx'
 import Datalist from './components/input/datalist.jsx'
-import handleChange from './components/input/handeChange.jsx'
+import handleChange from './components/input/handleChange.jsx'
 
 
 import config from './config.js'
