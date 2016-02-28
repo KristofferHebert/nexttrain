@@ -14,10 +14,7 @@ import Input from './components/input/input.jsx'
 import Datalist from './components/input/datalist.jsx'
 import handleChange from './components/input/handleChange.jsx'
 
-
 import config from './config.js'
-
-// <select id="edit-from-station" name="from_station" class="form-select"><option value="">Departing from?</option><option value="closest">Find closest</option><option value="12TH">12th St. Oakland City Center</option><option value="16TH">16th St. Mission (SF)</option><option value="19TH">19th St. Oakland</option><option value="24TH">24th St. Mission (SF)</option><option value="ASHB">Ashby (Berkeley)</option><option value="BALB">Balboa Park (SF)</option><option value="BAYF">Bay Fair (San Leandro)</option><option value="CAST">Castro Valley</option><option value="CIVC">Civic Center/UN Plaza (SF)</option><option value="COLS">Coliseum</option><option value="COLM" selected="selected">Colma</option><option value="CONC">Concord</option><option value="DALY">Daly City</option><option value="DBRK">Downtown Berkeley</option><option value="DUBL">Dublin/Pleasanton</option><option value="DELN">El Cerrito del Norte</option><option value="PLZA">El Cerrito Plaza</option><option value="EMBR">Embarcadero (SF)</option><option value="FRMT">Fremont</option><option value="FTVL">Fruitvale (Oakland)</option><option value="GLEN">Glen Park (SF)</option><option value="HAYW">Hayward</option><option value="LAFY">Lafayette</option><option value="LAKE">Lake Merritt (Oakland)</option><option value="MCAR">MacArthur (Oakland)</option><option value="MLBR">Millbrae</option><option value="MONT">Montgomery St. (SF)</option><option value="NBRK">North Berkeley</option><option value="NCON">North Concord/Martinez</option><option value="OAKL">Oakland Int'l Airport</option><option value="ORIN">Orinda</option><option value="PITT">Pittsburg/Bay Point</option><option value="PHIL">Pleasant Hill/Contra Costa Centre</option><option value="POWL">Powell St. (SF)</option><option value="RICH">Richmond</option><option value="ROCK">Rockridge (Oakland)</option><option value="SBRN">San Bruno</option><option value="SFIA">San Francisco Int'l Airport</option><option value="SANL">San Leandro</option><option value="SHAY">South Hayward</option><option value="SSAN">South San Francisco</option><option value="UCTY">Union City</option><option value="WCRK">Walnut Creek</option><option value="WDUB">West Dublin/Pleasanton</option><option value="WOAK">West Oakland</option></select>
 
 import Wrapper from './components/wrapper.jsx'
 
@@ -68,17 +65,64 @@ const HomePage = React.createClass({
     getInitialState(){
         return {
             initialValue : 'San Francisco',
+            options: [
+                { value: '12TH', label: '12th St. Oakland City Center', lat: 37.803769, lng: -122.271451},
+                { value: '16TH', label: '16th St. Mission (SF)', lat: 37.765195, lng: -122.417527},
+                { value: '19TH', label: '19th St. Oakland', lat: 37.808359 , lng: -122.268604 },
+                { value: '24TH', label: '24th St. Mission (SF)', lat: 37.751992, lng: -122.268604},
+                { value: 'ASHB', label: 'Ashby (Berkeley)', lat: 37.852883, lng: -122.269977},
+                { value: 'BALB', label: 'Balboa Park (SF)', lat: 37.724569, lng: -122.443357},
+                { value: 'BAYF', label: 'Bay Fair (San Leandro)', lat: 37.699422, lng: -122.123320},
+                { value: 'CAST', label: 'Castro Valley', lat: 37.6907739, lng: -122.077774},
+                { value: 'CIVC', label: 'Civic Center/UN Plaza (SF)', lat: 37.7797602, lng: -122.4163387},
+                { value: 'COLS', label: 'Coliseum', lat: 37.7536727, lng: -122.1990868 },
+                { value: 'COLM', label: 'Colma', lat: 37.6846422 , lng: -122.4684217},
+                { value: 'CONC', label: 'Concord', lat: 37.9737412, lng: -122.0312837},
+                { value: 'DALY', label: 'Daly City', lat: 37.7063674, lng: -122.4714491},
+                { value: 'DBRK', label: 'Downtown Berkeley', lat: 37.8701015, lng: -122.2703359},
+                { value: 'DUBL', label: 'Dublin/Pleasanton', lat: 37.7016546, lng: -121.9013717},
+                { value: 'DELN', label: 'El Cerrito del Norte', lat: 37.9251133, lng: -122.3189901},
+                { value: 'PLZA', label: 'El Cerrito Plaza', lat: 37.9026356, lng: -122.3011232},
+                { value: 'EMBR', label: 'Embarcadero (SF)', lat: 37.7929095, lng: -122.3992477},
+                { value: 'FRMT', label: 'Fremont', lat: 37.5574717, lng: -121.9788225},
+                { value: 'FTVL', label: 'Fruitvale (Oakland)', lat: 37.7748395, lng: -122.2263711},
+                { value: 'GLEN', label: 'Glen Park (SF)', lat: 37.733067, lng: -122.4360081},
+                { value: 'HAYW', label: 'Hayward', lat: 37.6697944, lng: -122.0891976},
+                { value: 'LAFY', label: 'Lafayette', lat: 37.8931842, lng: -122.1268296},
+                { value: 'LAKE', label: 'Lake Merritt (Oakland)', lat: 37.7970345, lng: -122.2673716},
+                { value: 'MCAR', label: 'MacArthur (Oakland)', lat:37.8290685, lng: -122.2692357},
+                { value: 'MLBR', label: 'Millbrae', lat: 37.6002806, lng: -122.3888814},
+                { value: 'MONT', label: 'Montgomery St. (SF)', lat: 37.7894111, lng: -122.403256},
+                { value: 'NBRK', label: 'North Berkeley', lat: 37.9667788, lng: -122.4824808},
+                { value: 'NCON', label: 'North Concord/Martinez', lat: 38.0032094, lng: -122.0268445},
+                { value: 'OAKL', label: 'Oakland Int\'l Airport', lat: 37.7116032, lng: -122.2143223},
+                { value: 'ORIN', label: 'Orinda', lat: 37.8783642, lng: -122.185988},
+                { value: 'PITT', label: 'Pittsburg/Bay Point', lat: 38.0189201, lng: -121.9473215},
+                { value: 'PHIL', label: 'Pleasant Hill/Contra Costa Centre', lat: 37.9286795, lng: -122.0578968},
+                { value: 'POWL', label: 'Powell St. (SF)', lat: 37.784473, lng: -122.4101751},
+                { value: 'RICH', label: 'Richmond', lat: 37.9368376, lng: -122.3553625},
+                { value: 'ROCK', label: 'Rockridge (Oakland)', lat: 37.8447065, lng: -122.2535807},
+                { value: 'SBRN', label: 'San Bruno', lat: 37.6377498, lng: -122.4184895},
+                { value: 'SFIA', label: 'San Francisco Int\'l Airport', lat: 37.6159671, lng: -122.3946041},
+                { value: 'SANL', label: 'San Leandro', lat: 37.7219544, lng: -122.163044},
+                { value: 'SHAY', label: 'South Hayward', lat: 37.6343644, lng: -122.0593897},
+                { value: 'SSAN', label: 'South San Francisco', lat: 37.6642503, lng: -122.446151},
+                { value: 'UCTY', label: 'Union City', lat: 37.5906302, lng: -122.019582},
+                { value: 'WCRK', label: 'Walnut Creek', lat: 37.9055276, lng: -122.0697154},
+                { value: 'WDUB', label: 'West Dublin/Pleasanton', lat: 37.6997604, lng: -121.930429},
+                { value: 'WOAK', label: 'West Oakland', lat: 37.8048775, lng: -122.2973283}
+            ],
             startLocation: {
               name: 'startLocation',
               type: 'text',
-              value: '12th St. Oakland City Center',
-              placeholder : '12th St. Oakland City Center',
-              required: true,
-              options: [
-                  {value: '12TH', label: '12th St. Oakland City Center'},
-                  {value: '12TH', label: '12th St. Oakland City Center'},
-                  {value: '12TH', label: '12th St. Oakland City Center'}
-              ]
+              value: '',
+              required: true
+            },
+            endLocation: {
+              name: 'endLocation',
+              type: 'text',
+              value: '',
+              required: true
             }
         }
     },
@@ -119,23 +163,27 @@ const HomePage = React.createClass({
     },
     handleChange,
     render(){
+
+        // TODO: Add fallback for no gpsbutton
+        // TODO: Add fallback for no internet
         return (
             <section>
                 <form action="">
-                    <label htmlFor="startLocation" className="control-label">Departing from</label>
-                    <div className="input-group">
-                        <Input {...this.state.startLocation} id="startLocation" className="form-control" list="startLocation-list" placeholder="Select a Starting place"onChange={this.handleChange}/>
-                        <Datalist id="startLocation-list"  options={this.state.startLocation.options} onChange={this.handleChange} />
-                        <If show={GeoLocate.canGeoLocate()}>
+                    <label htmlFor="startLocation" className="control-label ">Departing from</label>
+                    <div className="input-group form-group">
+                        <Input {...this.state.startLocation} id="startLocation" className="form-control" list="startLocation-list" placeholder="Select Depature Station" onChange={this.handleChange}/>
+                        <Datalist id="startLocation-list"  options={this.state.options} onChange={this.handleChange} />
                             <span className="input-group-btn">
                                 <GpsButton setAddress={this.startLocation} />
                             </span>
-                        </If>
                     </div>
-                    <label htmlFor="endLocation" className="control-label">Arriving at</label>
-                    <Input {...this.state.startLocation} id="startLocation" className="form-control" list="endLocation-list" placeholder="Select a Starting place"onChange={this.handleChange}/>
-                    <Datalist id="endLocation-list"  options={this.state.startLocation.options} onChange={this.handleChange} />
-                <a src="" className="btn btn-lg center-block btn-primary"><i className="fa fa-search"></i> Find Next Train</a>
+                    <div className="form-group">
+                        <label htmlFor="endLocation" className="control-label">Arriving at</label>
+                        <Input {...this.state.endLocation} id="endLocation" className="form-control" list="endLocation-list" placeholder="Select Arrival Station"onChange={this.handleChange}/>
+                        <Datalist id="endLocation-list"  options={this.state.options} onChange={this.handleChange} />
+                    </div>
+                    <a src="" className="btn btn-lg center-block btn-primary"><i className="fa fa-search"></i> Find Next Train</a>
+
                 </form>
 
             </section>
