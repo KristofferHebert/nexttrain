@@ -14,6 +14,7 @@ import Input from './components/input/input.jsx'
 import Datalist from './components/input/datalist.jsx'
 import handleChange from './components/input/handleChange.jsx'
 import setStation from './components/input/setStation.jsx'
+import getDuration from './util/duration.jsx'
 
 import config from './config.js'
 
@@ -32,6 +33,7 @@ const StationList = React.createClass({
             }
         }
     },
+    getDuration,
     render(){
 
         const stations = this.props.stations
@@ -40,7 +42,7 @@ const StationList = React.createClass({
         const triplist = schedule.request.trip.map(function(trip, i){
             return (
                 <li key={i} className='geosuggest-item'>
-                    {trip.leg.origTimeMin} to {trip.leg.destTimeMin} <span className="pull-right">Fare: ${trip.fare}  <i className="fa fa-train"></i></span>
+                    {trip.leg.origTimeMin} to {trip.leg.destTimeMin} {getDuration(schedule.date + ' ' + trip.leg.origTimeMin, schedule.date + ' ' + trip.leg.destTimeMin)} <span className="pull-right">Fare: ${trip.fare}  <i className="fa fa-train"></i></span>
                 </li>
             )
         })
