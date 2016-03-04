@@ -7,18 +7,42 @@ import config from '../config.jsx'
 
 const AdvisorBar = React.createClass({
     getInitialState(){
-            messages: false
+            schedules: false
     },
     componentDidMount(){
+
+        let self = this
+
         makeRequest('http://api.bart.gov/api/sched.aspx?cmd=special&key=' + config.key)
-            .then()
-            .catch()
+            .then(function(response){
+                if(response.status !== 200){
+
+                }
+
+                const schedules = response.data.special_schedules.special_schedule
+                self.setState(schedules)
+
+            })
+            .catch(function(err){
+                throw new Error('AdvisorBar issue:', err)
+            })
     },
     render(){
+
+        if(this.state.schedules){
+            const schedules = this.state.schedules.map((schedule) => {
+                return (
+                    <section>
+                        {schedule.text}
+                    </section>
+                )
+            })
+        }
+
         return (
-            <If show={this.state.messages}>
-                <section>
-                    {}
+            <If show={this.state.schedules}>
+                <section className={this.props.className}>
+                    {schedules}
                 </section>
             </If>
         )
