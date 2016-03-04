@@ -32,9 +32,9 @@ const AdvisorBar = React.createClass({
         if(this.state.schedules){
             const schedules = this.state.schedules.map((schedule) => {
                 return (
-                    <section>
+                    <p>
                         {schedule.text}
-                    </section>
+                    </p>
                 )
             })
         }
