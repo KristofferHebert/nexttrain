@@ -15,9 +15,10 @@ import Datalist from './components/input/datalist.jsx'
 import DropDown from './components/input/dropdown.jsx'
 import handleChange from './components/input/handleChange.jsx'
 import setStation from './components/input/setStation.jsx'
+import AdvisorBar from './components/advisorbar.jsx'
 import getDuration from './util/duration.jsx'
 import StationList from './components/stationlist.jsx'
-import config from './config.js'
+import config from './config.jsx'
 
 import Wrapper from './components/wrapper.jsx'
 
@@ -143,7 +144,7 @@ const HomePage = React.createClass({
                 self.setState({ stations: stations.data })
             })
             .catch(function(err){
-                console.log(err)
+                console.log(err.response)
             })
         }
 
@@ -189,6 +190,7 @@ const App = React.createClass({
                 <Wrapper>
                     <HomePage />
                 </Wrapper>
+                <AdvisorBar />
             </div>
         )
     }
