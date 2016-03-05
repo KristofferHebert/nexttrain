@@ -7,23 +7,23 @@ import config from '../config.jsx'
 
 const AdvisorBar = React.createClass({
     getInitialState(){
-            schedules: false
+        schedules: false
     },
     componentDidMount(){
 
         let self = this
 
         makeRequest('http://api.bart.gov/api/sched.aspx?cmd=special&key=' + config.key)
-            .then(function(response){
+            .then((response) => {
                 if(response.status !== 200){
-
+                    return throw new Error('Request failed for advisorbar', err)
                 }
 
                 const schedules = response.data.special_schedules.special_schedule
                 self.setState(schedules)
 
             })
-            .catch(function(err){
+            .catch((err) => {
                 throw new Error('AdvisorBar issue:', err)
             })
     },
