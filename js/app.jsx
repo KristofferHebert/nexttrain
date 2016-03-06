@@ -104,12 +104,11 @@ const HomePage = React.createClass({
             },
             stations:{"uri":"","origin":"","destination":"","sched_num":"",
                             "schedule":{"date":"","time":"","before":"","after":"","request":{"trip":[{"origin":"","destination":"","fare":"","origTimeMin":"","origTimeDate":" ","destTimeMin":"","destTimeDate":"","clipper":"","leg":{"order":"","transfercode":"","origin":"","destination":"","origTimeMin":"","origTimeDate":"","destTimeMin":"","destTimeDate":"","line":"","bikeflag":"","trainHeadStation":"","trainIdx":""}}]}},"message":{"co2_emissions":""}
-            }
+            },
+            message: false
         }
     },
     onSuggestSelectStart(suggest) {
-
-        console.log(suggest)
 
         this.setState({
             location : {
@@ -134,14 +133,14 @@ const HomePage = React.createClass({
     },
     getStations(){
 
-        if(this.state.startLocation.dirty === true && this.state.endLocation.dirty === true){
+        if(this.state.startLocation.dirty === true && this.state.endLocation.dirty === true && this.state.startLocation.station !== '' && this.state.endLocation.station !== ''){
             const self = this
             const startStaton = this.state.startLocation.station
             const endStation = this.state.endLocation.station
 
-            makeRequest(config.base + '/api/sched.aspx?cmd=depart&orig='+ startStaton +'&dest='+ endStation +'&type=departure&date=now&time=now&key=' + config.key)
+            makeRequest(config.base + '/api/sched.aspx?cmd=depart&orig='+ startStaton +'&dest='+ endStation +'&type=departure&date=now&time=now&a=4&key=' + config.key)
             .then(function(stations){
-                self.setState({ stations: stations.data })
+                self.setState({ stations: stations.data, message: stations.data.message.special_schedule })
             })
             .catch(function(err){
                 console.log(err.response)
@@ -161,7 +160,7 @@ const HomePage = React.createClass({
         return (
             <section>
                 <form action="">
-                    <label htmlFor="startLocation" className="control-label ">Departing from</label>
+                    <label htmlFor="startLocation" className="control-label ">Departing:</label>
                     <div className="input-group form-group">
                         <Input {...this.state.startLocation} id="startLocation" className="form-control" list="startLocation-list" placeholder="Select Depature Station" onChange={this.setStation} />
                         <Datalist id="startLocation-list"  options={this.state.options} />
@@ -170,12 +169,12 @@ const HomePage = React.createClass({
                             </span>
                     </div>
                     <div className="form-group">
-                        <label htmlFor="endLocation" className="control-label">Arriving at</label>
+                        <label htmlFor="endLocation" className="control-label">Arriving:</label>
                         <Input {...this.state.endLocation} id="endLocation" className="form-control" list="endLocation-list" placeholder="Select Arrival Station" onChange={this.setStation}/>
                         <Datalist id="endLocation-list"  options={this.state.options} onChange={this.handleChange} />
                     </div>
                     <If show={this.state.startLocation.dirty === true && this.state.endLocation.dirty === true}>
-                        <StationList stations={this.state.stations}/>
+                        <StationList stations={this.state.stations} message={this.state.message} />
                     </If>
                 </form>
             </section>

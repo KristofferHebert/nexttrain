@@ -6,9 +6,7 @@ function getDuration(start, end) {
     const startDate = new Date(start).getTime()
     const endDate = new Date(end).getTime()
     const ms = endDate - startDate
-
-    console.log(startDate, endDate, ms)
-
+    
     const hours = Math.floor(ms / 3600000)
     const minutes = Math.floor((ms % 3600000) / 60000)
 

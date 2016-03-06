@@ -8,9 +8,9 @@ const If = React.createClass({
     },
     render(){
         return (
-            <section>
+            <span>
                 {this.props.show ? this.props.children : null}
-            </section>
+            </span>
         )
     }
 })

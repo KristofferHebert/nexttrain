@@ -1,3 +1,13 @@
+.routes {
+    display: block;
+}
+
+.navbar-brand {
+  transform: translateX(-50%);
+  left: 50%;
+  position: absolute;
+}
+
 /* Geo suggest styling*/
 .geosuggest__input {
     margin-bottom: 0;
@@ -31,6 +41,16 @@
     background: #337ab7;
     color: #fff;
     cursor: pointer
+}
+
+.geosuggest-item-transfer {
+    background: #F2F2F2;
+    border-bottom: 0;
+    border-right: 4px solid #0099cc;
+}
+
+.geosuggest-item-transfer.last{
+    border-bottom: 1px solid #ccc;
 }
 
 /* starting location */
