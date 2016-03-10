@@ -1,5 +1,5 @@
 'use strict'
-
+import registerSW from './util/registerSW.jsx'
 import React from 'react'
 import ReactDOM from 'react-dom'
 
@@ -24,6 +24,9 @@ import Wrapper from './components/wrapper.jsx'
 
 // https://www.bart.gov/schedules/quickplanner?orig=CONC&addr1=&dest=FRMT&addr2=&type=departure&date=2016-02-28&time=now&tab=2
 // http://api.bart.gov/api/sched.aspx?cmd=depart&orig=CONC&dest=FRMT&type=departure&date=now&time=now&key=MW9S-E7SL-26DU-VV8V
+
+
+registerSW('/sw.js')
 
 const HomePage = React.createClass({
     getDefaultProps(){
