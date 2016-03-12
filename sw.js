@@ -8,23 +8,20 @@ const APPNAME = 'nexttrain-v1'
 
 const resourceCache = [
     '/',
+    '/css/bootstrap.min.css',
     '/css/main.css',
     '/js/bundle.js'
 ]
 
-if(navigator.serviceWorker){
 
-    navigator.serviceWorker
-        .register('sw.js', {
-            scope: './'
+// Cache Resources
+self.addEventListener('install', (event) => {
+    caches.open(APPNAME)
+        .then((cache) => {
+            console.log('Caching resources')
+            return cache.addAll(resourceCache)
         })
-        .then(function(registration){
-
+        .catch((err) => {
+            console.log('Caching files failed:', err)
         })
-        .catch(function(error){
-            console.log('ServiceWorker registration failed'. error)
-        })
-
-} else {
-    console.log('ServiceWorker not support in this browser')
-}
+})
