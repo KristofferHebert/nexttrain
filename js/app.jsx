@@ -6,7 +6,7 @@ import GeoLocate from './util/geolocate.jsx'
 import If from './util/if.jsx'
 import GpsButton from './components/button/gpsbutton.jsx'
 import makeRequest from './util/makeRequest.jsx'
-
+import toJSON from './util/toJSON.jsx'
 
 import Input from './components/input/input.jsx'
 import Datalist from './components/input/datalist.jsx'
@@ -143,7 +143,11 @@ const HomePage = React.createClass({
 
             makeRequest(config.base + '/api/sched.aspx?cmd=depart&orig='+ startStaton +'&dest='+ endStation +'&type=departure&date=now&time=now&a=4&key=' + config.key)
             .then(function(stations){
-                self.setState({ stations: stations.data, message: stations.data.message.special_schedule })
+
+                let output = toJSON(stations.data)
+                output = output.root
+
+                self.setState({ stations: output, message: output.message.special_schedule })
             })
             .catch(function(err){
                 console.log(err.response)
