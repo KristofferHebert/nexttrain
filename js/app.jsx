@@ -24,6 +24,7 @@ import Wrapper from './components/wrapper.jsx'
 
 // https://www.bart.gov/schedules/quickplanner?orig=CONC&addr1=&dest=FRMT&addr2=&type=departure&date=2016-02-28&time=now&tab=2
 // http://api.bart.gov/api/sched.aspx?cmd=depart&orig=CONC&dest=FRMT&type=departure&date=now&time=now&key=MW9S-E7SL-26DU-VV8V
+// https://www.pubnub.com/blog/2015-05-29-how-to-build-a-realtime-public-transit-schedule-app/
 
 registerSW('/sw.js')
 
@@ -163,12 +164,9 @@ const HomePage = React.createClass({
             <section>
                 <form action="">
                     <label htmlFor="startLocation" className="control-label ">Departing:</label>
-                    <div className="input-group form-group">
+                    <div className="form-group">
                         <Input {...this.state.startLocation} id="startLocation" className="form-control" list="startLocation-list" placeholder="Select Depature Station" onChange={this.setStation} />
                         <Datalist id="startLocation-list"  options={this.state.options} />
-                            <span className="input-group-btn">
-                                <GpsButton setAddress={this.startLocation} />
-                            </span>
                     </div>
                     <div className="form-group">
                         <label htmlFor="endLocation" className="control-label">Arriving:</label>
