@@ -1,4 +1,4 @@
-import xml2json from 'xml2json'
+const xml2json = require('xml-to-js')
 
 function toJSON(xml){
 

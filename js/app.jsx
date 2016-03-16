@@ -143,11 +143,7 @@ const HomePage = React.createClass({
 
             makeRequest(config.base + '/api/sched.aspx?cmd=depart&orig='+ startStaton +'&dest='+ endStation +'&type=departure&date=now&time=now&a=4&key=' + config.key)
             .then(function(stations){
-
-                let output = toJSON(stations.data)
-                output = output.root
-
-                self.setState({ stations: output, message: output.message.special_schedule })
+                self.setState({ stations: stations.data, message: stations.data.message.special_schedule })
             })
             .catch(function(err){
                 console.log(err.response)

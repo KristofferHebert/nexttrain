@@ -13,7 +13,7 @@ function _checkStatus(response) {
 
 // Helper function that return promise with data
 function _parseJSON(response) {
-	return response.json()
+	return response.text()
 }
 
 let defaultOptions = {
@@ -31,8 +31,8 @@ function makeRequest(endpoint, userOptions) {
 
     return fetch(endpoint, options)
 			.then(response => {
-			    return response.json().then(json => {
-			    	return response.ok ? json : Promise.reject(json)
+			    return response.text().then(text => {
+			    	return response.ok ? text : Promise.reject(text)
 			    })
 			})
 }
