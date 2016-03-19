@@ -2,6 +2,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
+import db from './db.jsx'
 import GeoLocate from './util/geolocate.jsx'
 import If from './util/if.jsx'
 import GpsButton from './components/button/gpsbutton.jsx'
