@@ -14,6 +14,7 @@ import Datalist from './components/input/datalist.jsx'
 import DropDown from './components/input/dropdown.jsx'
 import handleChange from './components/input/handleChange.jsx'
 import setStation from './components/input/setStation.jsx'
+import setStationForOffline from './components/input/setStationForOffline.jsx'
 import AdvisorBar from './components/advisorbar.jsx'
 import getDuration from './util/duration.jsx'
 import StationList from './components/stationlist.jsx'
@@ -27,7 +28,7 @@ import Wrapper from './components/wrapper.jsx'
 // http://api.bart.gov/api/sched.aspx?cmd=depart&orig=CONC&dest=FRMT&type=departure&date=now&time=now&key=MW9S-E7SL-26DU-VV8V
 // https://www.pubnub.com/blog/2015-05-29-how-to-build-a-realtime-public-transit-schedule-app/
 
-registerSW('/sw.js')
+//registerSW('/sw.js')
 
 const HomePage = React.createClass({
     getDefaultProps(){
@@ -90,6 +91,14 @@ const HomePage = React.createClass({
                 { value: 'WDUB', label: 'West Dublin/Pleasanton', lat: 37.6997604, lng: -121.930429},
                 { value: 'WOAK', label: 'West Oakland', lat: 37.8048775, lng: -122.2973283}
             ],
+            stationLocation: {
+              name: 'stationLocation',
+              type: 'text',
+              value: '',
+              station: '',
+              dirty: false,
+              required: true
+            },
             startLocation: {
               name: 'startLocation',
               type: 'text',
@@ -147,22 +156,31 @@ const HomePage = React.createClass({
                 self.setState({ stations: stations.data, message: stations.data.message.special_schedule })
             })
             .catch(function(err){
-                console.log(err.response)
+                console.log(err)
             })
         }
-
-
-
-
     },
     handleChange,
     setStation,
+    setStationForOffline,
     render(){
-
-        // TODO: Add fallback for no gpsbutton
-        // TODO: Add fallback for no internet
         return (
             <section>
+            <section>
+                <h3 className="text-center">Train Schedule by Station</h3>
+                <form action="">
+                    <label htmlFor="stationLocation" className="control-label ">Station:</label>
+                    <div className="form-group">
+                        <Input {...this.state.stationLocation} id="stationLocation" className="form-control" list="stationLocation-list" placeholder="Select Station" onChange={this.setStationForOffline} />
+                        <Datalist id="stationLocation-list"  options={this.state.options} />
+                    </div>
+                    <If show={this.state.startLocation.dirty === true && this.state.endLocation.dirty === true}>
+                        <StationList stations={this.state.stations} message={this.state.message} />
+                    </If>
+                </form>
+            </section>
+            <section>
+                <h3 className="text-center">Realtime Scheduler</h3>
                 <form action="">
                     <label htmlFor="startLocation" className="control-label ">Departing:</label>
                     <div className="form-group">
@@ -178,6 +196,7 @@ const HomePage = React.createClass({
                         <StationList stations={this.state.stations} message={this.state.message} />
                     </If>
                 </form>
+            </section>
             </section>
         )
     }

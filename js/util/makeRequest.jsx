@@ -31,7 +31,7 @@ function makeRequest(endpoint, userOptions) {
 
     return fetch(endpoint, options)
 			.then(response => {
-			    return response.text().then(text => {
+			    return response.json().then(text => {
 			    	return response.ok ? text : Promise.reject(text)
 			    })
 			})
