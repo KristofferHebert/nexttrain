@@ -18,6 +18,7 @@ import setStationForOffline from './components/input/setStationForOffline.jsx'
 import AdvisorBar from './components/advisorbar.jsx'
 import getDuration from './util/duration.jsx'
 import StationList from './components/stationlist.jsx'
+import StationsScheduleList from './components/stationsschedulelist.jsx'
 import config from './config.jsx'
 import registerSW from './util/registerSW.jsx'
 
@@ -118,7 +119,23 @@ const HomePage = React.createClass({
             stations:{"uri":"","origin":"","destination":"","sched_num":"",
                             "schedule":{"date":"","time":"","before":"","after":"","request":{"trip":[{"origin":"","destination":"","fare":"","origTimeMin":"","origTimeDate":" ","destTimeMin":"","destTimeDate":"","clipper":"","leg":{"order":"","transfercode":"","origin":"","destination":"","origTimeMin":"","origTimeDate":"","destTimeMin":"","destTimeDate":"","line":"","bikeflag":"","trainHeadStation":"","trainIdx":""}}]}},"message":{"co2_emissions":""}
             },
-            message: false
+            message: false,
+            stationSchedule: {
+                sched_num: false,
+                station: {
+                    item: [
+                        {
+                            line: false,
+                            trainHeadStation: false,
+                            origTime: false,
+                            destTime: false,
+                            trainIdx: false
+                        }
+                    ]
+                },
+                fullname: false,
+                name: false,
+            }
         }
     },
     onSuggestSelectStart(suggest) {
@@ -160,6 +177,21 @@ const HomePage = React.createClass({
             })
         }
     },
+    getStationsSchedule(){
+
+        if(this.state.stationLocation.dirty === true && this.state.stationLocation.station !== ''){
+            const self = this
+            const stationLocation = this.state.stationLocation.station
+
+            makeRequest(config.base + '/stnsched/'+ stationLocation)
+            .then(function(stations){
+                self.setState({ stationSchedule: stations.data })
+            })
+            .catch(function(err){
+                console.log(err)
+            })
+        }
+    },
     handleChange,
     setStation,
     setStationForOffline,
@@ -174,8 +206,8 @@ const HomePage = React.createClass({
                         <Input {...this.state.stationLocation} id="stationLocation" className="form-control" list="stationLocation-list" placeholder="Select Station" onChange={this.setStationForOffline} />
                         <Datalist id="stationLocation-list"  options={this.state.options} />
                     </div>
-                    <If show={this.state.startLocation.dirty === true && this.state.endLocation.dirty === true}>
-                        <StationList stations={this.state.stations} message={this.state.message} />
+                    <If show={this.state.stationLocation.dirty === true}>
+                        <StationsScheduleList stationSchedule={this.state.stationSchedule} />
                     </If>
                 </form>
             </section>
