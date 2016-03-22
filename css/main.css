@@ -3,9 +3,10 @@
 }
 
 .navbar-brand {
-  transform: translateX(-50%);
-  left: 50%;
-  position: absolute;
+    transform: translateX(-50%);
+    left: 50%;
+    position: absolute;
+    font-size: 1.2em;
 }
 
 /* Geo suggest styling*/
@@ -68,4 +69,13 @@
 .btn.btn-no-left-corners {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+}
+
+.overflow {
+    overflow: auto;
+    height: 440px;
+}
+
+.mr {
+    margin-right: 1em;
 }
