@@ -168,7 +168,7 @@ const HomePage = React.createClass({
             const startStaton = this.state.startLocation.station
             const endStation = this.state.endLocation.station
 
-            makeRequest(config.base + '/api/sched.aspx?cmd=depart&orig='+ startStaton +'&dest='+ endStation +'&type=departure&date=now&time=now&a=4&key=' + config.key)
+            makeRequest(config.base + '/realtime?url=api/sched.aspx?cmd=depart&orig='+ startStaton +'&dest='+ endStation +'&type=departure&date=now&time=now&a=4)
             .then(function(stations){
                 self.setState({ stations: stations.data, message: stations.data.message.special_schedule })
             })
