@@ -29,7 +29,7 @@ import Wrapper from './components/wrapper.jsx'
 // http://api.bart.gov/api/sched.aspx?cmd=depart&orig=CONC&dest=FRMT&type=departure&date=now&time=now&key=MW9S-E7SL-26DU-VV8V
 // https://www.pubnub.com/blog/2015-05-29-how-to-build-a-realtime-public-transit-schedule-app/
 
-//registerSW('/sw.js')
+registerSW('/sw.js')
 
 const HomePage = React.createClass({
     getDefaultProps(){
@@ -168,7 +168,7 @@ const HomePage = React.createClass({
             const startStaton = this.state.startLocation.station
             const endStation = this.state.endLocation.station
 
-            makeRequest(config.base + '/realtime?url=api/sched.aspx?cmd=depart&orig='+ startStaton +'&dest='+ endStation +'&type=departure&date=now&time=now&a=4)
+            makeRequest(config.base + '/realtime?url=api/sched.aspx?cmd=depart&orig='+ startStaton +'&dest='+ endStation +'&type=departure&date=now&time=now&a=4')
             .then(function(stations){
                 self.setState({ stations: stations.data, message: stations.data.message.special_schedule })
             })
