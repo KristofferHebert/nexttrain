@@ -1,6 +1,12 @@
 import React from 'react'
+import 'offline-js'
+
+
 
 const isOnline = React.createClass({
+    componentDidMount(){
+
+    },
     getInitialState(){
         return {
             isOnline: true
@@ -11,10 +17,7 @@ const isOnline = React.createClass({
         offline: false
     },
     render(){
-
-        const section = (this.state.isOnline) ? this.props.online : this.props.offline
-
-        return {section}
+        return {(this.state.isOnline) ? this.props.online : this.props.offline}
     }
 })
 
