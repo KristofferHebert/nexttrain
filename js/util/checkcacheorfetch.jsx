@@ -1,31 +1,37 @@
 import makeRequest from 'makeRequest'
 import db from '../db.jsx'
 
-const checkCacheOrFetch = function(url, key){
+const checkCacheOrFetch = function(url, collection, key, value){
     if(!url)
         throw new Error('missing url')
 
-    // check DB for cached response
-    db.open()
+    var promise = new Promise( function (resolve, reject) {
 
-    let stations = db.stations.where('name').equals(key)
+        // check DB for cached response
+        db.open()
 
-    if(stations.length !== 0) {
-        stations.each((station) => {
-            
-        })
-    } else {
+        let dbCollection = db[collection]
 
-        // If not in DB, fetch then cache in DB
-        makeRequest(url)
-        then((response) => {
+        let results = dbCollection.where(key).equals(value).first()
 
-        })
-        catch(() => {
+        if(results.length !== 0) {
+            resolve(results)
+        } else {
 
-        })
+            // If not in DB, fetch then cache in DB
+            makeRequest(url)
+            then((response) => {
+                resolve(response)
+            })
+            catch((err) => {
+                reject(response)
+            })
 
-    }
+        }
+
+    })
+
+    return promise
 
 }
 
