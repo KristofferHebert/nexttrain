@@ -1,4 +1,4 @@
-import makeRequest from 'makeRequest'
+import makeRequest from './makeRequest.jsx'
 import db from '../db.jsx'
 
 const checkCacheOrFetch = function(url, collection, key, value){
@@ -20,10 +20,10 @@ const checkCacheOrFetch = function(url, collection, key, value){
 
             // If not in DB, fetch then cache in DB
             makeRequest(url)
-            then((response) => {
+            .then((response) => {
                 resolve(response)
             })
-            catch((err) => {
+            .catch((err) => {
                 reject(response)
             })
 

@@ -21,7 +21,7 @@ import StationList from './components/stationlist.jsx'
 import StationsScheduleList from './components/stationsschedulelist.jsx'
 import config from './config.jsx'
 import registerSW from './util/registerSW.jsx'
-
+import checkCacheOrFetch from './util/checkcacheorfetch.jsx'
 
 import Wrapper from './components/wrapper.jsx'
 
@@ -32,6 +32,15 @@ import Wrapper from './components/wrapper.jsx'
 registerSW('/sw.js')
 
 const HomePage = React.createClass({
+    componentDidMount(){
+            checkCacheOrFetch(config.base + '/stations')
+                .then(function(response){
+                    console.log(response)
+                })
+                .catch((err) => {
+                    throw new Error('Error with fetching stations', err)
+                })
+    },
     getDefaultProps(){
         return {
             fixtures: [
