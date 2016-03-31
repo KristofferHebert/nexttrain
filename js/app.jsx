@@ -187,12 +187,16 @@ const HomePage = React.createClass({
             const self = this
             const stationLocation = this.state.stationLocation.station
 
-            makeRequest(config.base + '/stnsched/'+ stationLocation)
-            .then(function(stations){
-                self.setState({ stationSchedule: stations.data })
+            checkCacheOrFetch(config.base + '/stnsched/'+ stationLocation,'stations', 'name', stationLocation).then(function(station){
+
+                if(typeof station.station === 'string') {
+                    station.station = JSON.parse(station.station)
+                }
+                
+                self.setState({ stationSchedule: station })
             })
-            .catch(function(err){
-                console.log(err)
+            .catch((err) => {
+                throw new Error('cant fetch station', err)
             })
         }
     },

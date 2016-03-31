@@ -3,52 +3,6 @@
 // inspired by examples on
 // developer.mozilla.org/en-US/docs/Web/API/ServiceWorker.html
 // https://github.com/mxstbr/react-boilerplate/blob/master/serviceworker.js
-//
-//
-//
-//
-//
-//
-
-
-// Inpired by https://hacks.mozilla.org/2012/02/storing-images-and-files-in-indexeddb/
-
-// Set indexedDB to broswer specific version
-window.indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.OIndexedDB || window.msIndexedDB
-window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.OIDBTransaction || window.msIDBTransaction
-
-const DBNAME = "nextstation-offline-stations"
-const VERSION = "1"
-
-
-
-
-// let db = {
-//     _open(){
-//         return indexedDB.open(DBNAME, VERSION)
-//     },
-//     _getStore(){
-//
-//     },
-//     get(store, key){
-//
-//             let request = this._open()
-//
-//             request.onsuccess = function(event){
-//                 console.log('successfully opened ', DBNAME)
-//
-//                 let db = request.result
-//                 let transaction = db.transaction([DBNAME], "readwrite")
-//             }
-//
-//             request.onerror = function(event){
-//                 throw new Error('failed to open ', DBNAME, event.target.errorCode)
-//             }
-//     },
-//     set(store, key){
-//
-//     }
-// }
 
 const APPNAME = 'nexttrain-v1'
 const resourceCache = [

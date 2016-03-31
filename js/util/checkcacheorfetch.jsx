@@ -12,22 +12,24 @@ const checkCacheOrFetch = function(url, collection, key, value){
 
         let dbCollection = db[collection]
 
-        let results = dbCollection.where(key).equals(value).first()
+        dbCollection.where(key).equals(value).first(function(result){
 
-        if(results.length !== 0) {
-            resolve(results)
-        } else {
+            if(result){
+                return resolve(result)
+            } else {
 
-            // If not in DB, fetch then cache in DB
-            makeRequest(url)
-            .then((response) => {
-                resolve(response.data)
-            })
-            .catch((err) => {
-                reject(response)
-            })
+                // If not in DB, fetch from url
+                makeRequest(url)
+                .then((response) => {
+                    return resolve(response.data)
+                })
+                .catch((err) => {
+                    return reject(response)
+                })
 
-        }
+            }
+
+        })
 
     })
 
