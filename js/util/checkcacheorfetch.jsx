@@ -21,7 +21,7 @@ const checkCacheOrFetch = function(url, collection, key, value){
             // If not in DB, fetch then cache in DB
             makeRequest(url)
             .then((response) => {
-                resolve(response)
+                resolve(response.data)
             })
             .catch((err) => {
                 reject(response)

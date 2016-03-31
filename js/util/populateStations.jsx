@@ -6,25 +6,32 @@ const populateStations = function(url, collection){
         throw new Error('missing url')
 
 
-    // check DB for cached response
     db.open()
 
-    let dbCollection = db[collection].where('name').equals(value).first('12th')
-    
-    if(dbCollection.count() === 0){
+    let dbCollection = db[collection]
 
-        // If not in DB, fetch then cache in DB
-        makeRequest(url)
-        .then((response) => {
-            console.log(response)
-        })
-        .catch((err) => {
-            throw new Error('failed to fetch stations', err)
-        })
+    // check DB for cached response
 
-    } else {
-        console.log('Stations already cached')
-    }
+    dbCollection.toArray((station) => {
+        if(station.length === 0){
+            
+            // If not in DB, fetch then cache in DB
+            console.log('Fetching Stations and saving')
+            makeRequest(url)
+            .then((response) => {
+                response.data.forEach(function(station){
+                    dbCollection.put(station)
+                })
+            })
+            .catch((err) => {
+                throw new Error('failed to fetch stations', err)
+            })
+
+        } else {
+            console.log('Stations already cached')
+        }
+
+    })
 }
 
 export default populateStations
