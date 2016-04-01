@@ -2,8 +2,11 @@ import React from 'react'
 import 'offline-js'
 
 const  OfflineOnline = React.createClass({
-    componentWillMount(){
-        this.checkIfOnline()
+    componentDidMount(){
+        this.timer = setInterval(this.checkIfOnline, 3000)
+    },
+    componentWillUnmount(){
+        clearInterval(this.timer)
     },
     checkIfOnline(){
 
