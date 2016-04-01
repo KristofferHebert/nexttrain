@@ -6,7 +6,10 @@ const  OfflineOnline = React.createClass({
         this.checkIfOnline()
     },
     checkIfOnline(){
-        this.setState({ isOnline: Offline.check() })
+
+        // find a better solution, not 100% supported
+        var isOnline  = navigator.onLine
+        this.setState({ isOnline: isOnline })
     },
     getInitialState(){
         return {
