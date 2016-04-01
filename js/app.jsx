@@ -2,7 +2,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
+import config from './config.jsx'
 import db from './db.jsx'
+import OfflineOnline from './util/offlineonline.jsx'
+
 import GeoLocate from './util/geolocate.jsx'
 import If from './util/if.jsx'
 import GpsButton from './components/button/gpsbutton.jsx'
@@ -19,7 +22,6 @@ import AdvisorBar from './components/advisorbar.jsx'
 import getDuration from './util/duration.jsx'
 import StationList from './components/stationlist.jsx'
 import StationsScheduleList from './components/stationsschedulelist.jsx'
-import config from './config.jsx'
 import registerSW from './util/registerSW.jsx'
 import checkCacheOrFetch from './util/checkcacheorfetch.jsx'
 import populateStations from './util/populateStations.jsx'
@@ -33,7 +35,7 @@ import Wrapper from './components/wrapper.jsx'
 registerSW('/sw.js')
 
 const HomePage = React.createClass({
-    componentDidMount(){
+    componentWillMount(){
             populateStations(config.base + '/stations', 'stations')
     },
     getDefaultProps(){
@@ -172,7 +174,7 @@ const HomePage = React.createClass({
             const startStaton = this.state.startLocation.station
             const endStation = this.state.endLocation.station
 
-            makeRequest(config.base + '/realtime?url=api/sched.aspx?cmd=depart&orig='+ startStaton +'&dest='+ endStation +'&type=departure&date=now&time=now&a=4')
+            makeRequest(config.base + '/realtime/'+ startStaton +'/'+ endStation)
             .then(function(stations){
                 self.setState({ stations: stations.data, message: stations.data.message.special_schedule })
             })
@@ -192,7 +194,7 @@ const HomePage = React.createClass({
                 if(typeof station.station === 'string') {
                     station.station = JSON.parse(station.station)
                 }
-                
+
                 self.setState({ stationSchedule: station })
             })
             .catch((err) => {
@@ -204,21 +206,8 @@ const HomePage = React.createClass({
     setStation,
     setStationForOffline,
     render(){
-        return (
-            <section>
-            <section>
-                <h3 className="text-center">Train Schedule by Station</h3>
-                <form action="">
-                    <label htmlFor="stationLocation" className="control-label ">Station:</label>
-                    <div className="form-group">
-                        <Input {...this.state.stationLocation} id="stationLocation" className="form-control" list="stationLocation-list" placeholder="Select Station" onChange={this.setStationForOffline} />
-                        <Datalist id="stationLocation-list"  options={this.state.options} />
-                    </div>
-                    <If show={this.state.stationLocation.dirty === true}>
-                        <StationsScheduleList stationSchedule={this.state.stationSchedule} />
-                    </If>
-                </form>
-            </section>
+
+        const RealTimeSchedule = (
             <section>
                 <h3 className="text-center">Realtime Scheduler</h3>
                 <form action="">
@@ -237,6 +226,29 @@ const HomePage = React.createClass({
                     </If>
                 </form>
             </section>
+        )
+
+        const OfflineSchedule = (
+            <section>
+                <h3 className="text-center">Train Schedule by Station</h3>
+                <form action="">
+                    <label htmlFor="stationLocation" className="control-label ">Station:</label>
+                    <div className="form-group">
+                        <Input {...this.state.stationLocation} id="stationLocation" className="form-control" list="stationLocation-list" placeholder="Select Station" onChange={this.setStationForOffline} />
+                        <Datalist id="stationLocation-list"  options={this.state.options} />
+                    </div>
+                    <If show={this.state.stationLocation.dirty === true}>
+                        <StationsScheduleList stationSchedule={this.state.stationSchedule} />
+                    </If>
+                </form>
+            </section>
+        )
+
+        return (
+            <section>
+                <OfflineOnline
+                    online={RealTimeSchedule}
+                    offline={OfflineSchedule} />
             </section>
         )
     }
@@ -249,7 +261,6 @@ const App = React.createClass({
                 <Wrapper>
                     <HomePage />
                 </Wrapper>
-                <AdvisorBar />
             </div>
         )
     }

@@ -1,7 +1,7 @@
 import React from 'react'
 import getDuration from '../util/duration.jsx'
 import If from '../util/if.jsx'
-import AdvisorBar from '../components/advisorbar.jsx'
+import AdvisorBar from './advisorbar.jsx'
 
 
 

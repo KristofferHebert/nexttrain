@@ -1,21 +1,22 @@
 import React from 'react'
 import If from '../util/if.jsx'
-
-//http://api.bart.gov/api/sched.aspx?cmd=special&key=MW9S-E7SL-26DU-VV8V&l=1
+import decodeEntity from '../util/decodeentity.jsx'
 
 const AdvisorBar = React.createClass({
-    getInitialState(){
+    getDefaultProps(){
         return {
-                message: false
+                message: 'Nothing to report'
             }
     },
     render(){
+
+        const message  = "MESSAGE: " + this.props.message
+        const messageClass = (this.props.message !== 'Nothing to report') ? 'alert alert-warning' : 'alert alert-info'
+
         return (
-            <If show={this.state.message}>
-                <section className={this.props.className}>
-                    {this.state.message}
-                </section>
-            </If>
+            <section className={messageClass}>
+                <p dangerouslySetInnerHTML={{__html: decodeEntity(message)}} />
+            </section>
         )
     }
 })
