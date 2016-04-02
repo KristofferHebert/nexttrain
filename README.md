@@ -22,9 +22,9 @@ npm install
 ```
 Start Server in Development mode, restart on code change
 ```
-npm run dev
+npm run watch
 ```
-Start Server in Production mode
+Compile into production version
 ```
-npm run prod
+npm run build
 ```
