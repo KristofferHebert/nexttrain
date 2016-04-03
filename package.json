@@ -5,7 +5,8 @@
     "main": "server.js",
     "scripts": {
         "build": "NODE_ENV=production webpack -p",
-        "watch": "webpack-dev-server --hot --progress --colors"
+        "watch": "webpack-dev-server --hot --progress --colors",
+        "prod": "npm run build && http-server ."
     },
     "author": "Kristoffer Hebert",
     "license": "ISC",

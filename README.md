@@ -28,3 +28,7 @@ Compile into production version
 ```
 npm run build
 ```
+Compile into production version, and run in the browser
+```
+npm run prod
+```
