@@ -6,7 +6,7 @@
     "scripts": {
         "build": "NODE_ENV=production webpack -p",
         "watch": "webpack-dev-server --hot --progress --colors",
-        "prod": "npm run build && http-server ."
+        "prod": "npm run build && mkdir -p dist/js/ && cp js/bundle.js dist/js/bundle.js && cp index.html dist/index.html && http-server dist"
     },
     "author": "Kristoffer Hebert",
     "license": "ISC",
@@ -15,7 +15,9 @@
         "babel-loader": "^6.2.2",
         "babel-preset-es2015": "^6.5.0",
         "babel-preset-react": "^6.5.0",
+        "html-webpack-plugin": "^2.15.0",
         "react-hot-loader": "^1.3.0",
+        "style-loader": "^0.13.1",
         "webpack": "^1.12.13",
         "webpack-dev-server": "^1.14.1"
     },

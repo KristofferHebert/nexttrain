@@ -1,6 +1,8 @@
 // Based off tutorials from
 //
 // https://www.codementor.io/reactjs/tutorial/beginner-guide-setup-reactjs-environment-npm-babel-6-webpack
+// https://blog.scalac.io/2016/03/03/introduction-to-webpack-with-es2015-and-react.html
+
 
 var webpack = require('webpack')
 
@@ -26,7 +28,7 @@ module.exports = {
     module: {
         loaders: [
             { test : /\.jsx?/, exclude: /(node_modules|bower_components)/, loaders : ['react-hot','babel?cacheDirectory'] },
-            { test: /\.scss$/, exclude: /(node_modules|bower_components)/, loaders: ['style', 'css', 'sass'] }
+            { test: /\.css$/, loader: "style-loader!css-loader" },
         ]
     },
     plugins: [
