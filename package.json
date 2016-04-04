@@ -6,7 +6,9 @@
     "scripts": {
         "build": "NODE_ENV=production webpack -p",
         "watch": "webpack-dev-server --hot --progress --colors",
-        "prod": "npm run build && mkdir -p dist/js/ && cp js/bundle.js dist/js/bundle.js && cp index.html dist/index.html && http-server dist"
+        "css": "mkdir -p dist/css/ && cp css/main.css dist/css/main.css  && cp css/bootstrap.min.css dist/css/bootstrap.min.css",
+        "move": " mkdir -p dist/js/ && cp sw.js dist/sw.js && cp js/bundle.js dist/js/bundle.js && cp index.html dist/index.html",
+        "prod": "npm run build && npm run move && npm run css && http-server dist"
     },
     "author": "Kristoffer Hebert",
     "license": "ISC",
